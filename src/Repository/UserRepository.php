@@ -77,6 +77,42 @@ readonly class UserRepository
         }
     }
 
+    public function updateUser(User $user): bool
+    {
+        try {
+            if (!$this->checkIfEmailExists($user->getEmail())) {
+                return false;
+            }
+
+            $userUpdateDate = (new \DateTime())->format('Y-m-d H:i:s');
+            $user->setUpdatedAt($userUpdateDate);
+
+            $query = '
+                UPDATE users SET
+                    name = :name,
+                    email = :email,
+                    updated_at = :updated_at
+                WHERE id = :id;
+            ';
+
+            $statement = $this->pdo->prepare($query);
+
+            $statement->bindValue(':name', $user->getName());
+            $statement->bindValue(':email', $user->getEmail());
+            $statement->bindValue(':updated_at', $user->getUpdatedAt());
+            $statement->bindValue(':id', $user->getId());
+
+            if (!$statement->execute()) {
+                return false;
+            }
+
+            return true;
+        } catch (\PDOException $exception) {
+            error_log('Erro ao atualizar usuário', $exception->getMessage());
+            return false;
+        }
+    }
+
     public function findUserById(int $id): ?User
     {
         try {
