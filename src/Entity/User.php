@@ -20,7 +20,7 @@ class User
     {
         $this->setName($name);
         $this->setEmail($email);
-        $this->setPassword($password);
+        $this->setCreatePassword($password);
     }
 
     public function getId(): int
@@ -70,11 +70,16 @@ class User
         return $this->password;
     }
 
-    public function setPassword(?string $password): void
+    public function setCreatePassword(?string $password): void
     {
         if ($password !== null) {
             $this->password = password_hash($password, PASSWORD_ARGON2ID);
         }
+    }
+
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
     }
 
     public function getIsActive(): int
