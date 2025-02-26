@@ -113,6 +113,60 @@ readonly class UserRepository
         }
     }
 
+    public function disableUser(int $id): bool
+    {
+        try {
+            $query = '
+                UPDATE users SET
+                    is_active = 0,
+                    deleted_at = :deleted_at
+                WHERE id = :id;
+            ';
+
+            $statement = $this->pdo->prepare($query);
+
+            $userDeletionDate = (new \DateTime())->format('Y-m-d H:i:s');
+            $statement->bindValue(':deleted_at', $userDeletionDate);
+            $statement->bindValue(':id', $id);
+
+            if (!$statement->execute()) {
+                return false;
+            }
+
+            return true;
+        } catch (\PDOException $exception) {
+            error_log('Não foi possível desativar a conta', $exception->getMessage());
+            return false;
+        }
+    }
+
+    public function reactivateUser(string $email): bool
+    {
+        try {
+            $query = '
+                UPDATE users SET
+                    is_active = 1,
+                    restored_at = :restored_at
+                WHERE email = :email;
+            ';
+
+            $statement = $this->pdo->prepare($query);
+
+            $userReactivationDate = (new \DateTime())->format('Y-m-d H:i:s');
+            $statement->bindValue(':restored_at', $userReactivationDate);
+            $statement->bindValue(':email', $email);
+
+            if (!$statement->execute()) {
+                return false;
+            }
+
+            return true;
+        } catch (\PDOException $exception) {
+            error_log('Não foi possível reativar a conta', $exception->getMessage());
+            return false;
+        }
+    }
+
     public function findUserById(int $id): ?User
     {
         try {
