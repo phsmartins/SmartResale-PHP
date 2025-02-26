@@ -102,11 +102,7 @@ readonly class UserRepository
             $statement->bindValue(':updated_at', $user->getUpdatedAt());
             $statement->bindValue(':id', $user->getId());
 
-            if (!$statement->execute()) {
-                return false;
-            }
-
-            return true;
+            return $statement->execute();
         } catch (\PDOException $exception) {
             error_log('Erro ao atualizar usuário', $exception->getMessage());
             return false;
@@ -150,11 +146,7 @@ readonly class UserRepository
             $statement->bindValue(':deleted_at', $userDeletionDate);
             $statement->bindValue(':id', $id);
 
-            if (!$statement->execute()) {
-                return false;
-            }
-
-            return true;
+            return $statement->execute();
         } catch (\PDOException $exception) {
             error_log('Não foi possível desativar a conta', $exception->getMessage());
             return false;
@@ -177,11 +169,7 @@ readonly class UserRepository
             $statement->bindValue(':restored_at', $userReactivationDate);
             $statement->bindValue(':email', $email);
 
-            if (!$statement->execute()) {
-                return false;
-            }
-
-            return true;
+            return $statement->execute();
         } catch (\PDOException $exception) {
             error_log('Não foi possível reativar a conta', $exception->getMessage());
             return false;
