@@ -113,6 +113,27 @@ readonly class UserRepository
         }
     }
 
+    public function updatePassword(string $password, int $id): bool
+    {
+        try {
+            $querySql = "
+                UPDATE users SET
+                    password = :password 
+                WHERE id = :id;
+            ";
+
+            $statement = $this->pdo->prepare($querySql);
+
+            $statement->bindValue(':password', password_hash($password, PASSWORD_ARGON2ID));
+            $statement->bindValue(':id', $id);
+
+            return $statement->execute();
+        } catch (\PDOException $exception) {
+            error_log('Erro ao atualizar senh: ' . $exception);
+            return false;
+        }
+    }
+
     public function disableUser(int $id): bool
     {
         try {
