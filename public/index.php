@@ -14,7 +14,7 @@ $diContainer = require_once __DIR__ . '/../config/dependencies.php';
 $pathInfo = $_SERVER['PATH_INFO'] ?? '/';
 $httpMethod = $_SERVER['REQUEST_METHOD'];
 
-/*session_start();
+session_start();
 session_regenerate_id();
 
 $isLoginRoute = $pathInfo === '/login';
@@ -23,7 +23,7 @@ $isSignUpRoute = $pathInfo === '/signup';
 if (!array_key_exists('logged_in', $_SESSION) && !$isLoginRoute && !$isSignUpRoute) {
     header('location: /login');
     return;
-}*/
+}
 
 $key = "$httpMethod|$pathInfo";
 
