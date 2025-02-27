@@ -190,7 +190,13 @@ readonly class UserRepository
                 return null;
             }
 
-            return $this->hydrateUser($statement->fetch(\PDO::FETCH_ASSOC));
+            $statementReturn = $statement->fetch(\PDO::FETCH_ASSOC);
+
+            if (!$statementReturn) {
+                return null;
+            }
+
+            return $this->hydrateUser($statementReturn);
         } catch (\PDOException $exception) {
             error_log('Erro ao buscar dados do usuário: ' . $exception->getMessage());
             return null;
@@ -211,7 +217,13 @@ readonly class UserRepository
                 return null;
             }
 
-            return $this->hydrateUser($statement->fetch(\PDO::FETCH_ASSOC));
+            $statementReturn = $statement->fetch(\PDO::FETCH_ASSOC);
+
+            if (!$statementReturn) {
+                return null;
+            }
+
+            return $this->hydrateUser($statementReturn);
         } catch (\PDOException $exception) {
             error_log('Erro ao buscar dados do usuário: ' . $exception->getMessage());
             return null;
