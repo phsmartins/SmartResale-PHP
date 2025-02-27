@@ -15,7 +15,7 @@ $builder = new ContainerBuilder();
 
 $builder->addDefinitions([
     PDO::class => function (): PDO {
-        $dbPath = __DIR__ . $_ENV['DB_PATH'];
+        $dbPath = __DIR__ . '/../' . $_ENV['DB_PATH'];
 
         try {
             $pdo = new PDO("sqlite:{$dbPath}");
