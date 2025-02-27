@@ -34,6 +34,11 @@ readonly class LoginController implements RequestHandlerInterface
 
         $userData = $this->userRepository->findUserByEmail($email);
 
+        if ($userData === null) {
+            $this->addErrorMessage('E-mail ou senha inválidos. Tente novamente');
+            return new Response(302, ['Location' => '/login']);
+        }
+
         if ($userData->getIsActive() === 0) {
             $this->addErrorMessage('Consta desativada. Ainda vou criar a funcionalidade para reativar &#128517;');
             return new Response(302, ['Location' => '/login']);
