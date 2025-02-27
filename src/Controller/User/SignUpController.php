@@ -8,9 +8,12 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Smart\Resale\Entity\User;
 use Smart\Resale\Repository\UserRepository;
+use Smart\Resale\Traits\FlashMessageTrait;
 
 readonly class SignUpController implements RequestHandlerInterface
 {
+    use FlashMessageTrait;
+
     public function __construct(
         private UserRepository $userRepository
     )
@@ -29,14 +32,17 @@ readonly class SignUpController implements RequestHandlerInterface
         $_SESSION['user_email_sign'] = $email;
 
         if (empty($name)) {
+            $this->addErrorMessage("O campo 'Nome completo' não pode ser vazio");
             return new Response(302, ['Location' => '/signup?error=1']);
         }
 
         if ($email === false || $email === null) {
+            $this->addErrorMessage('Digite um e-mail válido');
             return new Response(302, ['Location' => '/signup?error=2']);
         }
 
         if ($email != $confirmEmail) {
+            $this->addErrorMessage('Os e-mails informados não são iguais');
             return new Response(302, ['Location' => '/signup?error=3']);
         }
 
@@ -48,9 +54,14 @@ readonly class SignUpController implements RequestHandlerInterface
         $user->setIsActive();
 
         if (!$this->userRepository->addUser($user)) {
+            $this->addErrorMessageAlert(
+                'Whoops... Erro inesperado',
+                'Tente criar sua conta novamente mais tarde'
+            );
             return new Response(302, ['Location' => '/signup?error=4']);
         }
 
+        $this->addSuccessMessageAlert("Conta criada com sucesso!", "Pronto para acessar o sistema");
         return new Response(302, ['Location' => '/login?contra=criada']);
     }
 }

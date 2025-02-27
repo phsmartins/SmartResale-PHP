@@ -7,9 +7,12 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Smart\Resale\Repository\UserRepository;
+use Smart\Resale\Traits\FlashMessageTrait;
 
 readonly class LoginController implements RequestHandlerInterface
 {
+    use FlashMessageTrait;
+
     public function __construct(
         private UserRepository $userRepository,
     )
@@ -23,7 +26,8 @@ readonly class LoginController implements RequestHandlerInterface
         $password = filter_var($parsedBody['password']);
 
         if ($email === false || $email === null) {
-            return new Response(302, ['Location' => '/login?error=1']);
+            $this->addErrorMessage('Digite um e-mail válido');
+            return new Response(302, ['Location' => '/login']);
         }
 
         $_SESSION['user_email_login'] = $email;
@@ -31,7 +35,8 @@ readonly class LoginController implements RequestHandlerInterface
         $userData = $this->userRepository->findUserByEmail($email);
 
         if ($userData->getIsActive() === 0) {
-            return new Response(302, ['Location' => '/login?error=2']);
+            $this->addErrorMessage('Consta desativada. Ainda vou criar a funcionalidade para reativar &#128517;');
+            return new Response(302, ['Location' => '/login']);
         }
 
         if (password_verify($password, $userData->getPassword() ?? '')) {
@@ -44,6 +49,7 @@ readonly class LoginController implements RequestHandlerInterface
             return new Response(302, ['Location' => '/']);
         }
 
-        return new Response(302, ['Location' => '/login?error=3']);
+        $this->addErrorMessage('E-mail ou senha inválidos. Tente novamente');
+        return new Response(302, ['Location' => '/login']);
     }
 }
