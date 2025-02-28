@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link rel="stylesheet" href="/style/main.css">
+    <link rel="stylesheet" href="/style/login.css">
+
     <title>SmartResale | Entre ou Cadastre-se</title>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -19,7 +22,7 @@
             alt="Logo da SmartResale" />
 
         <img
-            class="welcome__image-login"
+            class="welcome__image_login"
             src="/images/image-login.png"
             alt="Imagem para representar gestão em relação ao sistema" />
         <h1>Controle suas vendas do começo ao fim</h1>

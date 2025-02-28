@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+:root {
+    font-size: 62.5%;
+
+    --primary-dark-color: #030234;
+    --secondary-dark-color: #212121;
+    --tertiary-dark-color: #494949;
+
+    --primary-light-color: #226EB6;
+    --secondary-light-color: #87B3DD;
+
+    --text-light-color: #FFFFFF;
+
+    --color-input-border: #727272;
+
+    --delete-background-color: #EC0707;
+
+    --upgrade-background-color: #226EB6;
+    --upgrade-hover-background-color: #2582DA;
+
+    --insert-background-color: #52B963;
+    --insert-hover-background-color: #45A955;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    font-family: "Roboto", sans-serif;
+}
+
+.swal2-title {
+    font-size: 2.6rem;
+    border: none;
+}
+
+.swal2-confirm {
+    font-size: 1.6rem;
+}
+
+#swal2-html-container {
+    font-size: 1.8rem;
+}

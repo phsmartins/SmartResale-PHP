@@ -2,7 +2,7 @@
 
 <form method="post">
     <h2>Olá, bem-vindo!</h2>
-    <p>Digite as credênciais para acessar o sistema</p>
+    <p class="form_text">Digite as credênciais para acessar o sistema</p>
 
     <?php if (array_key_exists('error_message', $_SESSION)): ?>
         <p class="error-message-login">
@@ -22,10 +22,13 @@
     />
     <?php unset($_SESSION['user_email_login']); ?>
 
-    <label for="password">Senha:</label>
-    <input type="password" name="password" id="password" placeholder="Informe sua senha" required />
+    <div>
+        <label for="password">Senha:</label>
+        <input type="password" name="password" id="password" placeholder="Informe sua senha" required />
+    </div>
 
     <button type="submit">Acessar</button>
 
     <a href="/signup" class="other-form">Não tem conta? Cadastre-se</a>
+
 </form>

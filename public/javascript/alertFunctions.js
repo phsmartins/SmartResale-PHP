@@ -3,7 +3,7 @@ function successMessage(title, text) {
         title: `${title}`,
         text: `${text}`,
         icon: "success",
-        width: "48em",
+        width: "50em",
         padding: "2.4rem"
     });
 }
@@ -13,7 +13,7 @@ function errorMessage(title, text) {
         title: `${title}`,
         text: `${text}`,
         icon: "error",
-        width: "48em",
+        width: "50em",
         padding: "2.4rem"
     });
 }
