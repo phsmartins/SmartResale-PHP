@@ -33,17 +33,17 @@ readonly class SignUpController implements RequestHandlerInterface
 
         if (empty($name)) {
             $this->addErrorMessage("O campo 'Nome completo' não pode ser vazio");
-            return new Response(302, ['Location' => '/signup?error=1']);
+            return new Response(302, ['Location' => '/signup']);
         }
 
         if ($email === false || $email === null) {
             $this->addErrorMessage('Digite um e-mail válido');
-            return new Response(302, ['Location' => '/signup?error=2']);
+            return new Response(302, ['Location' => '/signup']);
         }
 
         if ($email != $confirmEmail) {
             $this->addErrorMessage('Os e-mails informados não são iguais');
-            return new Response(302, ['Location' => '/signup?error=3']);
+            return new Response(302, ['Location' => '/signup']);
         }
 
         $user = new User(
@@ -53,15 +53,29 @@ readonly class SignUpController implements RequestHandlerInterface
         );
         $user->setIsActive();
 
-        if (!$this->userRepository->addUser($user)) {
+        try {
+            if (!$this->userRepository->addUser($user)) {
+                $this->addErrorMessageAlert(
+                    'Whoops... Erro inesperado',
+                    'Tente criar sua conta novamente mais tarde'
+                );
+                return new Response(302, ['Location' => '/signup']);
+            }
+        } catch (\LogicException $exception) {
+            $this->addErrorMessageAlert(
+                $exception->getMessage(),
+                'Talvez você já tenha uma conta cadastrada'
+            );
+            return new Response(302, ['Location' => '/signup']);
+        } catch (\PDOException $exception) {
             $this->addErrorMessageAlert(
                 'Whoops... Erro inesperado',
                 'Tente criar sua conta novamente mais tarde'
             );
-            return new Response(302, ['Location' => '/signup?error=4']);
+            return new Response(302, ['Location' => '/signup']);
         }
 
         $this->addSuccessMessageAlert("Conta criada com sucesso!", "Pronto para acessar o sistema");
-        return new Response(302, ['Location' => '/login?contra=criada']);
+        return new Response(302, ['Location' => '/login']);
     }
 }
