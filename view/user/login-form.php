@@ -1,4 +1,4 @@
-<?php  //$this->layout('layout-login') ?>
+<?php  $this->layout('layout-login') ?>
 
 <form method="post">
     <h2>Olá, bem-vindo!</h2>

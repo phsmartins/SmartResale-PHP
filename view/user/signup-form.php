@@ -1,3 +1,5 @@
+<?php  $this->layout('layout-login') ?>
+
 <form method="post">
     <h2>Olá, bem-vindo!</h2>
     <p>Informe seus dados para criar uma conta</p>
@@ -33,3 +35,22 @@
 
     <a href="/login" class="other-form">Já tem conta? Entre</a>
 </form>
+
+<?php
+if (
+    array_key_exists('error_title_message', $_SESSION) &&
+    array_key_exists('error_text_message', $_SESSION)
+):
+?>
+    <script>
+        errorMessage(
+            "<?= $_SESSION['error_title_message'] ?>",
+            "<?= $_SESSION['error_text_message'] ?>"
+        );
+    </script>
+<?php endif; ?>
+
+<?php
+unset($_SESSION['error_title_message']);
+unset($_SESSION['error_text_message']);
+?>
