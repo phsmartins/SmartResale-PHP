@@ -56,6 +56,13 @@ form h2 {
     margin-bottom: .5rem;
 }
 
+.error_message_login {
+    font-size: 1.4rem;
+    color: var(--delete-background-color);
+
+    margin-bottom: 2rem;
+}
+
 form p.form_text {
     font-size: 1.4rem;
 

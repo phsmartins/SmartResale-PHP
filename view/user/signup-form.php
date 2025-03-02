@@ -4,6 +4,14 @@
     <h2>Olá, bem-vindo!</h2>
     <p class="form_text">Informe seus dados para criar uma conta</p>
 
+    <?php if (array_key_exists('error_message', $_SESSION)): ?>
+        <p class="error_message_login">
+            <?= $_SESSION['error_message'] ?>
+
+            <?php unset($_SESSION['error_message']); ?>
+        </p>
+    <?php endif; ?>
+
     <div>
         <label for="name">Nome completo:</label>
         <input
@@ -12,7 +20,6 @@
             id="name"
             value="<?= isset($_SESSION['user_name_sign']) ? htmlspecialchars($_SESSION['user_name_sign']) : ''; ?>"
             placeholder="Informe seu nome completo"
-            required
         />
         <?php unset($_SESSION['user_name_sign']); ?>
     </div>
@@ -36,7 +43,7 @@
 
     <div>
         <label for="password">Senha:</label>
-        <input type="password" name="password" id="password" placeholder="Informe sua senha" required />
+        <input type="password" name="password" id="password" placeholder="Informe sua senha" />
     </div>
 
     <button type="submit">Cadastrar</button>

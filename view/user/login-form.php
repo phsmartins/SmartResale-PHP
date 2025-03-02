@@ -5,7 +5,7 @@
     <p class="form_text">Digite as credênciais para acessar o sistema</p>
 
     <?php if (array_key_exists('error_message', $_SESSION)): ?>
-        <p class="error-message-login">
+        <p class="error_message_login">
             <?= $_SESSION['error_message'] ?>
 
             <?php unset($_SESSION['error_message']); ?>
