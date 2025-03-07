@@ -9,8 +9,30 @@ readonly class UserRepository
     public function __construct(private \PDO $pdo)
     {}
 
-    public function checkIfEmailExists(string $email): bool
+    public function checkIfEmailExists(string $email, int $id = null): bool
     {
+        if ($id !== null) {
+            try {
+                $query = 'SELECT email FROM users WHERE id = :id;';
+
+                $statement = $this->pdo->prepare($query);
+                $statement->bindValue(':id', $id);
+
+                if (!$statement->execute()) {
+                    return false;
+                }
+
+                $emailFound = $statement->fetch(\PDO::FETCH_ASSOC);
+
+                if ($email === $emailFound['email']) {
+                    return true;
+                }
+            } catch (\PDOException $exception) {
+                error_log('Erro ao buscar e-mail', $exception->getMessage());
+                return false;
+            }
+        }
+
         try {
             $query = 'SELECT COUNT(*) FROM users WHERE email = :email;';
 
@@ -80,7 +102,7 @@ readonly class UserRepository
     public function updateUser(User $user): bool
     {
         try {
-            if (!$this->checkIfEmailExists($user->getEmail())) {
+            if (!$this->checkIfEmailExists($user->getEmail(), $user->getId())) {
                 return false;
             }
 
