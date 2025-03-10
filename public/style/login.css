@@ -1,0 +1,117 @@
+main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+div.welcome__box {
+    width: 40%;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background: linear-gradient(var(--primary-light-color) 10%, var(--secondary-light-color) 90%);
+}
+
+img.welcome__logo {
+    width: 25rem;
+}
+
+img.welcome__image_login {
+    width: 25rem;
+
+    margin: 2rem 0;
+}
+
+div.welcome__box h1 {
+    font-size: 2.8rem;
+    text-align: center;
+    color: var(--primary-dark-color);
+
+    max-width: 30rem;
+}
+
+div.form__box {
+    width: 60%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+form {
+    text-align: center;
+    color: var(--primary-dark-color);
+
+    width: 35rem;
+}
+
+form h2 {
+    font-size: 2.4rem;
+
+    margin-bottom: .5rem;
+}
+
+.error_message_login {
+    font-size: 1.4rem;
+    color: var(--delete-background-color);
+
+    margin-bottom: 2rem;
+}
+
+form p.form_text {
+    font-size: 1.4rem;
+
+    margin-bottom: 2rem;
+}
+
+form label {
+    text-align: left;
+    font-size: 1.4rem;
+
+    display: block;
+    margin-bottom: .3rem;
+}
+
+form input {
+    width: 100%;
+
+    font-size: 1.6rem;
+    border-radius: .5rem;
+    border: 1px solid var(--primary-dark-color);
+
+    padding: 1rem .8rem;
+    margin-bottom: 1.5rem;
+}
+
+a.other-form {
+    display: block;
+    margin-top: 2rem;
+
+    font-size: 1.4rem;
+}
+
+form button {
+    cursor: pointer;
+
+    font-size: 1.8rem;
+    color: var(--text-light-color);
+
+    background-color: var(--primary-dark-color);
+    border-radius: .5rem;
+    border: navajowhite;
+
+    width: 100%;
+    padding: 1rem 0;
+}
+
+div.developed {
+    position: absolute;
+    bottom: 3rem;
+
+    font-size: 1.2rem;
+}

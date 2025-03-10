@@ -1,3 +1,4 @@
 .idea/
 vendor/
+localTests/
 infra/*sqlite*
