@@ -31,6 +31,87 @@
     font-family: "Roboto", sans-serif;
 }
 
+h1, h2, h3, h4 {
+    color: var(--primary-dark-color);
+}
+
+section#container {
+    max-width: 128rem;
+    margin: 0 auto;
+    padding: 5rem 4%;
+}
+
+h2.title {
+    font-size: 2.8rem;
+    margin-bottom: 3rem;
+}
+
+h3.sub_title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+form label {
+    display: block;
+
+    font-size: 1.6rem;
+    margin-bottom: .5rem;
+}
+
+form input {
+    width: 100%;
+
+    font-size: 1.6rem;
+
+    border-radius: .5rem;
+    border: 1px solid var(--primary-dark-color);
+
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+div.form_button {
+    text-align: right;
+}
+
+form button {
+    cursor: pointer;
+
+    font-size: 1.6rem;
+    color: var(--text-light-color);
+
+    padding: .8rem 2rem;
+
+    border: none;
+    border-radius: .5rem;
+}
+
+.update_button {
+    background-color: var(--upgrade-background-color);
+    transition: .4s;
+}
+
+.update_button:hover {
+    background-color: var(--upgrade-hover-background-color);
+}
+
+.delete_button {
+    background-color: var(--delete-background-color);
+}
+
+.disable_text {
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+}
+
+.disable_text p {
+    margin-bottom: .6rem;
+}
+
+hr {
+    margin: 3rem 0;
+}
+
 .swal2-title {
     font-size: 2.6rem;
     border: none;

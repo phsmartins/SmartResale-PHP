@@ -8,11 +8,15 @@
 
     <title>SmartResale</title>
 
+    <script src="https://kit.fontawesome.com/545cb6747b.js" crossorigin="anonymous"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/javascript/alertFunctions.js"></script>
 </head>
 <body>
-    <?= $this->section('content'); ?>
+    <main>
+        <?= $this->section('content'); ?>
+    </main>
 </body>
 </html>
 
