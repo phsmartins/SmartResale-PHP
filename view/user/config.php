@@ -15,3 +15,8 @@
     <input type="password" name="new_password" id="new_password">
     <button>Editar</button>
 </form>
+
+<form action="/config/disable-account" method="post">
+    <input type="password" name="password" id="password">
+    <button>Desativar</button>
+</form>

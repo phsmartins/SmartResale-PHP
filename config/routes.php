@@ -14,4 +14,5 @@ return [
     'GET|/config/user' => \Smart\Resale\Controller\User\UserConfigController::class,
     'POST|/config/user-update' => \Smart\Resale\Controller\User\UpdateUserController::class,
     'POST|/config/password-update' => \Smart\Resale\Controller\User\UpdatePasswordController::class,
+    'POST|/config/disable-account' => \Smart\Resale\Controller\User\DisableAccountController::class,
 ];
