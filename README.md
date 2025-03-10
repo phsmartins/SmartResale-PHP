@@ -24,4 +24,4 @@ Caso queira visualizar o projeto, faça os seguintes passos:
 
 ## Telas realizadas:
 
-- Login e SignUp [em andamento]
+- Login e SignUp
