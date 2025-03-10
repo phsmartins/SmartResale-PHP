@@ -1,6 +1,7 @@
 <?php
 
 /** @var \Smart\Resale\Entity\User $userData */
+$this->layout('layout');
 
 ?>
 

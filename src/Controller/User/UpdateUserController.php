@@ -8,9 +8,12 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Smart\Resale\Entity\User;
 use Smart\Resale\Repository\UserRepository;
+use Smart\Resale\Traits\FlashMessageTrait;
 
 readonly class UpdateUserController implements RequestHandlerInterface
 {
+    use FlashMessageTrait;
+
     public function __construct(
         private UserRepository $userRepository,
     )
@@ -24,11 +27,13 @@ readonly class UpdateUserController implements RequestHandlerInterface
         $email = filter_var($parsedBody['email'], FILTER_VALIDATE_EMAIL);
 
         if (empty($name)) {
-            return new Response(302, ['Location' => '/config/user?error=name']);
+            $this->addErrorMessageAlert("'Nome' é um campo obrigatório");
+            return new Response(302, ['Location' => '/config/user']);
         }
 
         if ($email === false || $email === null) {
-            return new Response(302, ['Location' => '/config/user?error=email']);
+            $this->addErrorMessageAlert('Digite um e-mail válido');
+            return new Response(302, ['Location' => '/config/user']);
         }
 
         $user = new User(
@@ -39,14 +44,18 @@ readonly class UpdateUserController implements RequestHandlerInterface
 
         try {
             if (!$this->userRepository->updateUser($user)) {
-                return new Response(302, ['Location' => '/config/user?error=error2']);
+                $this->addErrorMessageAlert('Erro inesperado', 'Tente novamente');
+                return new Response(302, ['Location' => '/config/user']);
             }
         } catch (\LogicException $exception) {
-            return new Response(302, ['Location' => '/config/user?error=email2']);
+            $this->addErrorMessageAlert('Esse e-mail já existe na base de dados');
+            return new Response(302, ['Location' => '/config/user']);
         } catch (\PDOException $exception) {
-            return new Response(302, ['Location' => '/config/user?error=error']);
+            $this->addErrorMessageAlert('Erro inesperado', 'Tente novamente');
+            return new Response(302, ['Location' => '/config/user']);
         }
 
+        $this->addSuccessMessageAlert('Dados atualizados com sucesso', 'Bom trabalho');
         return new Response(302, ['Location' => '/config/user']);
     }
 }

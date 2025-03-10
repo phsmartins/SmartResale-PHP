@@ -7,9 +7,12 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Smart\Resale\Repository\UserRepository;
+use Smart\Resale\Traits\FlashMessageTrait;
 
 readonly class UpdatePasswordController implements RequestHandlerInterface
 {
+    use FlashMessageTrait;
+
     public function __construct(
         private UserRepository $userRepository,
     )
@@ -23,7 +26,8 @@ readonly class UpdatePasswordController implements RequestHandlerInterface
         $newPassword = filter_var($parsedBody['new_password']);
 
         if (empty($oldPassword) || empty($newPassword)) {
-            return new Response(302, ['Location' => '/config/user?pass=1']);
+            $this->addErrorMessageAlert('Preecha todos os campos de senha');
+            return new Response(302, ['Location' => '/config/user']);
         }
 
         $userId = $_SESSION['user_id'];
@@ -36,12 +40,15 @@ readonly class UpdatePasswordController implements RequestHandlerInterface
                 $this->userRepository->updatePassword($password, $userId);
             } catch (\PDOException $exception) {
                 error_log($exception);
-                return new Response(302, ['Location' => '/config/user?pass=2']);
+                $this->addErrorMessageAlert('Erro inesperado', 'Tente novamente');
+                return new Response(302, ['Location' => '/config/user']);
             }
 
+            $this->addSuccessMessageAlert('Senha atualizada com sucesso', 'Bom trabalho');
             return new Response(302, ['Location' => '/config/user']);
         }
 
+        $this->addErrorMessageAlert('Senha incorreta', 'Tente novamente');
         return new Response(302, ['Location' => '/config/user?pass=3']);
     }
 }

@@ -7,9 +7,12 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Smart\Resale\Repository\UserRepository;
+use Smart\Resale\Traits\FlashMessageTrait;
 
-class DisableAccountController implements RequestHandlerInterface
+readonly class DisableAccountController implements RequestHandlerInterface
 {
+    use FlashMessageTrait;
+
     public function __construct(
         private UserRepository $userRepository,
     )
@@ -22,7 +25,8 @@ class DisableAccountController implements RequestHandlerInterface
         $password = filter_var($parsedBody['password']);
 
         if (empty($password)) {
-            return new Response(302, ['Location' => '/config/user?delete=1']);
+            $this->addErrorMessageAlert('Senha incorreta', 'Tente novamente');
+            return new Response(302, ['Location' => '/config/user']);
         }
 
         $userId = $_SESSION['user_id'];
@@ -35,10 +39,12 @@ class DisableAccountController implements RequestHandlerInterface
                 return new Response(302, ['Location' => '/login']);
             } catch (\PDOException $exception) {
                 error_log($exception);
-                return new Response(302, ['Location' => '/config/user?delete=2']);
+                $this->addErrorMessageAlert('Erro inesperado', 'Tente novamente');
+                return new Response(302, ['Location' => '/config/user']);
             }
         }
 
-        return new Response(302, ['Location' => '/config/user?delete=3']);
+        $this->addErrorMessageAlert('Senha incorreta', 'Tente novamente');
+        return new Response(302, ['Location' => '/config/user']);
     }
 }
