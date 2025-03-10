@@ -9,3 +9,9 @@
     <input name="email" id="email" value="<?= $userData->getEmail(); ?>">
     <button>Editar</button>
 </form>
+
+<form action="/config/password-update" method="post">
+    <input type="password" name="password" id="password">
+    <input type="password" name="new_password" id="new_password">
+    <button>Editar</button>
+</form>

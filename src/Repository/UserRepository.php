@@ -142,7 +142,7 @@ readonly class UserRepository
 
             $statement = $this->pdo->prepare($querySql);
 
-            $statement->bindValue(':password', password_hash($password, PASSWORD_ARGON2ID));
+            $statement->bindValue(':password', $password);
             $statement->bindValue(':id', $id);
 
             return $statement->execute();
